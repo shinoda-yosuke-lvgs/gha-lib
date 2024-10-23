@@ -13,17 +13,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - run: git config --list
-      - run: git status
-      - run: git branch
-      - run: gh auth status
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: gh auth setup-git
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: git config --list
       - run: git checkout -b workflow/`uuidgen`
       - run: mkdir -p rotate-files && touch rotate-files/`date +%Y-%m-%d-%H%M%S`.txt
-      - run: git add .
-      - run: git commit -m "auto commit"
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -a -m "auto commit"
+      - run: gh pr create --fill
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
