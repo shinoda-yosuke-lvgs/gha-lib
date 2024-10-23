@@ -13,13 +13,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - run: git checkout -b "workflow/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+      - run: git checkout -b "workflow/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" origin/main
       - run: mkdir -p rotate-files && touch rotate-files/`date +%Y-%m-%d-%H%M%S`.txt
       - run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "auto commit"
-      - run: gh pr create --fill --head
+          git push
+      - run: gh pr create --fill
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
