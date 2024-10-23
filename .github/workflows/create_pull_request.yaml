@@ -11,3 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: mkdir -p rotate-files && touch rotate-files/`date +%Y-%m-%d-%H%M%S`.txt
+      - run: git config --list
+      - run: git status
+      - run: git branch
