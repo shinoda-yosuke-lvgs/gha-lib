@@ -10,16 +10,10 @@ on:
         - synchronize
   workflow_dispatch:
 
-permissions:
-  pull-requests: write
-
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          gh pr edit ${{ github.event.number }} \
-          --repo=${{ github.repository }} \
-          --add-assignee=${{ github.event.pull_request.user.login }}
+      - run: echo "$VALUE"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALUE: ${{ toJSON(github) }}
