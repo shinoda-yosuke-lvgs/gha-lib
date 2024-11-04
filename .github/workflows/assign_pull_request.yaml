@@ -1,0 +1,22 @@
+name: "Create Pull Request"
+
+on:
+  # https://docs.github.com/ja/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#pull_request
+  pull_request:
+    types:
+        - opened
+        - ready_for_review
+        - converted_to_draft
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "$VALUE"
+        env:
+          VALUE: ${{ toJSON(github) }}
