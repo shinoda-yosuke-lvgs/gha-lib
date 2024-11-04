@@ -20,3 +20,6 @@ jobs:
       - run: echo "$VALUE"
         env:
           VALUE: ${{ toJSON(github) }}
+      - run: gh pr edit ${{ github.event.number }} --add-assignee ${{ github.event.pull_request.user.login }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
